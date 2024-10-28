@@ -5,7 +5,7 @@ import { ApiGatewayService } from './api-gateway.service';
 export class ApiGatewayController {
   constructor(private readonly apiGatewayService: ApiGatewayService) {}
 
-  @Get()
+  @Get('/calculate')
   async calculate(@Query('n') n: number) {
     const result = await this.apiGatewayService.processNumber(n);
     return result;

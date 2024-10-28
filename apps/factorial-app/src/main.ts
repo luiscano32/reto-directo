@@ -14,7 +14,7 @@ async function bootstrap() {
     {
       transport: Transport.RMQ,
       options: {
-        urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+        urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
         queue: 'factorial_queue',
         queueOptions: {
           durable: true,
@@ -23,7 +23,7 @@ async function bootstrap() {
     });
 
   await app.listen();
-  logger.log(`FactorialMicroservice running on port ${envs.factorialMicroservicePort}`);
+  logger.log(`FactorialMicroservice is running`);
 }
 
 bootstrap();

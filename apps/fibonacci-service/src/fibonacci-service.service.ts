@@ -4,6 +4,12 @@ import { Injectable } from '@nestjs/common';
 export class FibonacciServiceService {
   calculateFibonacci(n): number {
     if (n <= 1) return n;
-    return this.calculateFibonacci(n - 1) + this.calculateFibonacci(n - 2);
+    let a = 0, b = 1;
+    for (let i = 2; i <= n; i++) {
+      const temp = a + b;
+      a = b;
+      b = temp;
+    }
+    return b;
   }
 }

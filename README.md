@@ -88,7 +88,7 @@ RABBITMQ_DEFAULT_PORT=<YOUR_RABBITMQ_PORT>
 ```
 
 ### **Paso 5: Ejecutar los Servicios**
-Ejecutar cada microservicio en una terminal diferente:
+Ejecutar desde la raíz del proyecto en una terminal diferente para ejecutar cada microservicio:
 ```bash
 # Ejecutar api-gateway
 nest start api-gateway
@@ -123,15 +123,17 @@ GET http://localhost:3000/calculate?n=4
 Respuesta:
 ```bash
 {
-	"isPair": false,
-	"factors": [
-		1,
-		5
-	],
-	"fibonacci": 5,
-	"factorial": 120,
-	"isPrime": true,
-	"sum": 127.5
+  "isPair": true,
+  "isPrime": false,
+  "factorial": 40320,
+  "sumN": 324,
+  "factors": [
+    1,
+    2,
+    4,
+    8
+  ],
+  "fibonacci": 21
 }
 ```
 
