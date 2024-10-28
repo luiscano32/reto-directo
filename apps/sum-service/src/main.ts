@@ -7,8 +7,15 @@ import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
 
+  // genera logger para sección de main del microservicio sum
   const logger = new Logger('Main-SumMS');
 
+  /**
+   * Configuración de conexión con RabbitMQ.
+   * Utiliza las credenciales y parámetros definidos en las variables de entorno
+   * - transport: Define el transporte como RMQ (RabbitMQ)
+   * - options: Configura la URL de conexión y las opciones de la cola
+   */
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
     SumServiceModule, 
     {

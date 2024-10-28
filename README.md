@@ -77,13 +77,18 @@ docker-compose up -d
 ```
 
 ### **Paso 4: Configuración de variables de entorno***
-Crear archivo `.env` en base a `.env.template` incluido para configurar variables de entorno requeridas:
+Genera una copia del archivo `.env.template` a un `.env` para configurar variables de entorno requeridas:
 ```javascript
+# Puerto en el que correrá el API Gateway.
 API_GATEWAY_PORT=<YOUR_PORT>
 
+# Dominio o dirección del servidor RabbitMQ. 
 RABBITMQ_DEFAULT_DOMAIN=<YOUR_RABBITMQ_DOMAIN>
+# Usuario de RabbitMQ. 
 RABBITMQ_DEFAULT_USER=<YOUR_RABBITMQ_USER>
+# Contraseña del usuario de RabbitMQ. 
 RABBITMQ_DEFAULT_PASS=<YOUR_RABBITMQ_PASSWORD>
+# Puerto donde se encuentra el servicio de RabbitMQ.
 RABBITMQ_DEFAULT_PORT=<YOUR_RABBITMQ_PORT>
 ```
 

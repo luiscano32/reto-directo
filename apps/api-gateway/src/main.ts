@@ -12,7 +12,12 @@ async function bootstrap() {
 
   const app = await NestFactory.create(AppModule);
   
-  // creación de conexión mediante RabitMQ
+  /**
+   * Configuración de conexión con RabbitMQ.
+   * Utiliza las credenciales y parámetros definidos en las variables de entorno
+   * - transport: Define el transporte como RMQ (RabbitMQ)
+   * - options: Configura la URL de conexión y las opciones de la cola
+   */
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
@@ -24,7 +29,9 @@ async function bootstrap() {
     },
   });
 
+  // inicialización de todos los microservicios conectados
   await app.startAllMicroservices();
+  // inicialización de API Gateway en el puerto definido en las variables de entorno
   await app.listen(envs.apiGatewayPort);
 
   logger.log(`Gateway is running`);
