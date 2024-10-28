@@ -1,99 +1,163 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Reto Directo: Microservicios con NestJS y RabbitMQ 🐇
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto es parte del reto técnico para construir una aplicación basada en microservicios utilizando **NestJS** y **RabbitMQ**. La aplicación realiza diversos cálculos basados en un número entero recibido como entrada y devuelve los resultados en formato JSON.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 **Descripción del Proyecto**
 
-## Description
+El sistema está compuesto por múltiples **microservicios** que se encargan de realizar diferentes cálculos:
+- **Paridad**: Determina si un número es par o impar.
+- **Primalidad**: Verifica si un número es primo.
+- **Factorial**: Calcula el factorial del número.
+- **Suma de Enteros**: Suma todos los enteros desde 1 hasta `n`.
+- **Factores**: Devuelve todos los factores del número.
+- **Fibonacci**: Calcula el valor correspondiente de la secuencia de Fibonacci para `n`.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Todos estos microservicios están organizados en un **monorepo** y se comunican entre sí utilizando **RabbitMQ** como intermediario de mensajería.
 
-## Project setup
+---
 
+## 📦 **Estructura del Proyecto**
+<dl>
+  <dt>├── apps/</dt>
+    <dd>&nbsp;├── api-gateway/ # API Gateway para coordinar los microservicios │ </dd>
+    <dd>&nbsp;├── factorial-app/ # Servicio de factorial</dd>
+    <dd>&nbsp;├── factors-service/ # Servicio de factores</dd>
+    <dd>&nbsp;└── fibonacci-service/ # Servicio de Fibonacci</dd>
+    <dd>&nbsp;├── parity-service/ # Servicio de paridad</dd>
+    <dd>&nbsp;├── primality-service/ # Servicio de primalidad</dd>
+    <dd>&nbsp;├── sum-service/ # Servicio de suma de enteros</dd>
+  <dt>├── docker-compose.yml # Configuración de Docker para levantar RabbitMQ </dt>
+  <dt>├── config/</dt>
+    <dd>&nbsp;├── envs.ts # Lógica de validación de variables .env</dd>
+  <dt>├── .env.template # Template con variables de entorno requeridas</dt>
+<dl>
+
+---
+
+## 🛠️ **Tecnologías Usadas**
+
+- **NestJS**: Framework para construir los microservicios.
+- **RabbitMQ**: Sistema de mensajería para la comunicación entre los servicios.
+- **Docker**: Contenedores para gestionar los servicios.
+- **TypeScript**: Lenguaje principal del proyecto.
+
+#### **Librerías y Dependencias Específicas**
+- **@nestjs/microservices**: Paquete para habilitar la comunicación entre microservicios en NestJS.
+- **amqp-connection-manager**: Manejo automático de conexiones AMQP (utilizado para RabbitMQ).
+- **amqplib**: Cliente AMQP para interactuar con RabbitMQ.
+- **dotenv**: Gestión de variables de entorno.
+- **Joi**: Validación de esquemas para variables de entorno.
+- **rxjs**: Librería para programación reactiva utilizada en la gestión de mensajes y eventos.
+
+---
+
+## ⚙️ **Instalación y Configuración**
+
+### **Requisitos Previos**
+- **Node.js** y **npm** instalados.
+- **Docker** y **Docker Compose** instalados.
+- Puerto `5672` (RabbitMQ) y `3000` (Puerto API Gateway) libres en tu equipo.
+
+### **Paso 1: Clonar el Repositorio**
 ```bash
-$ npm install
+git clone https://github.com/luiscano32/reto-directo.git
+cd reto-directo
 ```
 
-## Compile and run the project
-
+### **Paso 2: Instalar Dependencias**
+Instala las dependencias para cada aplicación dentro del monorepo:
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
-
+### **Paso 3: Levantar RabbitMQ con Docker***
+Levanta RabbitMQ usando Docker:
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker-compose up -d
 ```
 
-## Deployment
+### **Paso 4: Configuración de variables de entorno***
+Crear archivo `.env` en base a `.env.template` incluido para configurar variables de entorno requeridas:
+```javascript
+API_GATEWAY_PORT=<YOUR_PORT>
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
+RABBITMQ_DEFAULT_DOMAIN=<YOUR_RABBITMQ_DOMAIN>
+RABBITMQ_DEFAULT_USER=<YOUR_RABBITMQ_USER>
+RABBITMQ_DEFAULT_PASS=<YOUR_RABBITMQ_PASSWORD>
+RABBITMQ_DEFAULT_PORT=<YOUR_RABBITMQ_PORT>
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### **Paso 5: Ejecutar los Servicios**
+Ejecutar cada microservicio en una terminal diferente:
+```bash
+# Ejecutar api-gateway
+nest start api-gateway
 
-## Resources
+# Ejecutar factorial-app
+nest start factorial-app
 
-Check out a few resources that may come in handy when working with NestJS:
+# Ejecutar factors-service
+nest start factors-service
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+# Ejecutar fibonacci-service
+nest start fibonacci-service
 
-## Support
+# Ejecutar parity-service
+nest start parity-service
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+# Ejecutar primality-service
+nest start primality-service
 
-## Stay in touch
+# Ejecutar sum-service
+nest start sum-service
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 🧪 **Uso**
+### Ejemplo de Petición al API Gateway
+Haz una solicitud GET al API Gateway para probar el servicio de paridad:
+```bash
+GET http://localhost:3000/calculate?n=4
+```
+Respuesta:
+```bash
+{
+	"isPair": false,
+	"factors": [
+		1,
+		5
+	],
+	"fibonacci": 5,
+	"factorial": 120,
+	"isPrime": true,
+	"sum": 127.5
+}
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+---
+
+## 📚 **Documentación Adicional**
+- [NestJS Documentation](https://docs.nestjs.com)
+- [RabbitMQ Documentation](https://www.rabbitmq.com/docs)
+- [Docker Documentation](https://docs.docker.com)
+
+---
+
+## 🔧 **Solución de Problemas**
+#### Error de conexión con RabbitMQ:
+
+Verifica que Docker esté corriendo correctamente.
+Asegúrate de que los puertos `5672` y `15672` estén libres.
+Cola ya existente con configuración diferente:
+
+Elimina la cola en RabbitMQ desde el panel de administración en http://localhost:15672.
+
+---
+
+## 📬 **Contacto**
+Estos son algunos de mis medios de contacto 👌:
+
+- **Email**: luis.e.cano@outlook.com
+- **LinkedIn**: https://www.linkedin.com/in/luis-cano-95oc21
+- **GitHub**: [luiscano32](https://github.com/luiscano32/)
