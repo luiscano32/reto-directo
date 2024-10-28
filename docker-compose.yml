@@ -5,11 +5,76 @@ services:
     image: rabbitmq:3-management
     container_name: rabbitmq
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5672:5672"       # Puerto para mensajes
+      - "15672:15672"     # Interfaz web de administración
     environment:
       RABBITMQ_DEFAULT_USER: rabbit_5uper_user
       RABBITMQ_DEFAULT_PASS: rabbit_5upp3r_p4ssword
+    networks:
+      - microservices-network
+
+  api-gateway:
+    build:
+      context: .
+      dockerfile: ./apps/api-gateway/Dockerfile
+    depends_on:
+      - rabbitmq
+    ports:
+      - "3000:3000"
+    networks:
+      - microservices-network
+
+  factors-service:
+    build:
+      context: .
+      dockerfile: ./apps/factors-service/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  factorial-app:
+    build:
+      context: .
+      dockerfile: ./apps/factorial-app/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  primality-service:
+    build:
+      context: .
+      dockerfile: ./apps/primality-service/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  parity-service:
+    build:
+      context: .
+      dockerfile: ./apps/parity-service/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  sum-service:
+    build:
+      context: .
+      dockerfile: ./apps/sum-service/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - microservices-network
+
+  fibonacci-service:
+    build:
+      context: .
+      dockerfile: ./apps/fibonacci-service/Dockerfile
+    depends_on:
+      - rabbitmq
     networks:
       - microservices-network
 
