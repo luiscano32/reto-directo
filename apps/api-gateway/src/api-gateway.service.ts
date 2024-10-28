@@ -12,9 +12,13 @@ export class ApiGatewayService {
     private parityClient: ClientProxy;
     private primalityClient: ClientProxy;
     private sumClient: ClientProxy;
-    
+    /**
+     * Inicializa los diferentes clientes de RabbitMQ para los microservicios.
+     * Cada microservicio está vinculado a su cola específica en RabbitMQ.
+     */
     constructor() {
         
+        // Cliente para el servicio de factores
         this.factorsClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
@@ -24,6 +28,7 @@ export class ApiGatewayService {
             },
         });
         
+        // Cliente para el servicio de cálculo factorial
         this.factorialClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
@@ -33,6 +38,7 @@ export class ApiGatewayService {
             },
         });
 
+        // Cliente para el servicio de cálculo de Fibonacci
         this.fibonacciClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
@@ -42,6 +48,7 @@ export class ApiGatewayService {
             },
         });
 
+        // Cliente para el servicio de paridad (par o impar)
         this.parityClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
@@ -51,6 +58,7 @@ export class ApiGatewayService {
             },
         });
 
+        // Cliente para el servicio de primalidad (número primo o no)
         this.primalityClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
@@ -60,6 +68,7 @@ export class ApiGatewayService {
             },
         });
 
+        // Cliente para el servicio de suma
         this.sumClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
@@ -70,6 +79,12 @@ export class ApiGatewayService {
         });
     }
 
+    /**
+     * processNumber: Llama a los microservicios para procesar un número.
+     * 
+     * @param n - El número a procesar.
+     * @returns Un objeto con los resultados de los diferentes cálculos realizados por los microservicios.
+     */
     async processNumber(n: number) {
         
         const responses = await Promise.all([
@@ -81,6 +96,7 @@ export class ApiGatewayService {
             firstValueFrom(this.sumClient.send({ cmd: 'calculate_sum' }, n)),
         ]);
         
+        // Desestructuración de las respuestas de los microservicios
         const [
             factors,
             factorial,
@@ -90,13 +106,14 @@ export class ApiGatewayService {
             sumN,
         ] = responses;
         
+        // Retorna los resultados en un objeto con las diferentes métricas
         return {
-          isPair,
-          isPrime,
-          factorial,
-          sumN,
-          factors,
-          fibonacci,
+            isPair,      // Indica si el número es par
+            isPrime,     // Indica si el número es primo
+            factorial,   // Factorial del número
+            sumN,        // Suma de los números hasta 'n'
+            factors,     // Factores del número
+            fibonacci,   // Valor de Fibonacci para 'n'
         };
     }
 
