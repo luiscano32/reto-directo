@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api-gateway/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": true,
+    "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+  },
+  "monorepo": true,
+  "root": "apps/api-gateway",
+  "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "parity-service": {
+      "type": "application",
+      "root": "apps/parity-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/parity-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/parity-service/tsconfig.app.json"
+      }
+    },
+    "primality-service": {
+      "type": "application",
+      "root": "apps/primality-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/primality-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/primality-service/tsconfig.app.json"
+      }
+    },
+    "factorial-app": {
+      "type": "application",
+      "root": "apps/factorial-app",
+      "entryFile": "main",
+      "sourceRoot": "apps/factorial-app/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/factorial-app/tsconfig.app.json"
+      }
+    },
+    "sum-service": {
+      "type": "application",
+      "root": "apps/sum-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/sum-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/sum-service/tsconfig.app.json"
+      }
+    },
+    "factors-service": {
+      "type": "application",
+      "root": "apps/factors-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/factors-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/factors-service/tsconfig.app.json"
+      }
+    },
+    "fibonacci-service": {
+      "type": "application",
+      "root": "apps/fibonacci-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/fibonacci-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/fibonacci-service/tsconfig.app.json"
+      }
+    }
+  }
+}
