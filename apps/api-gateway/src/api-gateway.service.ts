@@ -22,7 +22,7 @@ export class ApiGatewayService {
         this.factorsClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
                 queue: 'factors_queue',
                 queueOptions: { durable: true },
             },
@@ -32,7 +32,7 @@ export class ApiGatewayService {
         this.factorialClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
                 queue: 'factorial_queue',
                 queueOptions: { durable: true },
             },
@@ -42,7 +42,7 @@ export class ApiGatewayService {
         this.fibonacciClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
                 queue: 'fibonacci_queue',
                 queueOptions: { durable: true },
             },
@@ -52,7 +52,7 @@ export class ApiGatewayService {
         this.parityClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
                 queue: 'parity_queue',
                 queueOptions: { durable: true },
             },
@@ -62,7 +62,7 @@ export class ApiGatewayService {
         this.primalityClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
                 queue: 'primality_queue',
                 queueOptions: { durable: true },
             },
@@ -72,7 +72,7 @@ export class ApiGatewayService {
         this.sumClient = ClientProxyFactory.create({
             transport: Transport.RMQ,
             options: {
-                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@localhost:${envs.rabbitMq_default_port}`],
+                urls: [`amqp://${envs.rabbitMq_default_user}:${envs.rabbitMq_default_pass}@${envs.rabbitMq_default_domain}:${envs.rabbitMq_default_port}`],
                 queue: 'sum_queue',
                 queueOptions: { durable: true },
             },
