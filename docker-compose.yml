@@ -3,15 +3,20 @@ version: '3.8'
 services:
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq
+    container_name: ${RABBITMQ_DEFAULT_DOMAIN}
     ports:
       - "5672:5672"       # Puerto para mensajes
       - "15672:15672"     # Interfaz web de administración
     environment:
-      RABBITMQ_DEFAULT_USER: rabbit_5uper_user
-      RABBITMQ_DEFAULT_PASS: rabbit_5upp3r_p4ssword
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
     networks:
       - microservices-network
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api-gateway:
     build:
@@ -21,13 +26,16 @@ services:
       - "3000:3000"
     volumes:
       - ./apps/api-gateway/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 
@@ -37,13 +45,16 @@ services:
       dockerfile: ./apps/factors-service/Dockerfile
     volumes:
       - ./apps/factors-service/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 
@@ -53,13 +64,16 @@ services:
       dockerfile: ./apps/factorial-app/Dockerfile
     volumes:
       - ./apps/factorial-app/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 
@@ -69,13 +83,16 @@ services:
       dockerfile: ./apps/primality-service/Dockerfile
     volumes:
       - ./apps/primality-service/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 
@@ -85,13 +102,16 @@ services:
       dockerfile: ./apps/parity-service/Dockerfile
     volumes:
       - ./apps/parity-service/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 
@@ -101,13 +121,16 @@ services:
       dockerfile: ./apps/sum-service/Dockerfile
     volumes:
       - ./apps/sum-service/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 
@@ -117,13 +140,16 @@ services:
       dockerfile: ./apps/fibonacci-service/Dockerfile
     volumes:
       - ./apps/fibonacci-service/src:/usr/src/app/src
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     command: npm run start:dev
     environment:
-      - API_GATEWAY_PORT=3000
-      - RABBITMQ_DEFAULT_DOMAIN=rabbitmq
-      - RABBITMQ_DEFAULT_USER=rabbit_5uper_user
-      - RABBITMQ_DEFAULT_PASS=rabbit_5upp3r_p4ssword
-      - RABBITMQ_DEFAULT_PORT=5672
+      - API_GATEWAY_PORT=${API_GATEWAY_PORT}
+      - RABBITMQ_DEFAULT_DOMAIN=${RABBITMQ_DEFAULT_DOMAIN}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
     networks:
       - microservices-network
 

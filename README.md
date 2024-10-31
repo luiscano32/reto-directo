@@ -54,9 +54,9 @@ Todos estos microservicios están organizados en un **monorepo** y se comunican 
 ## ⚙️ **Instalación y Configuración**
 
 ### **Requisitos Previos**
-- **Node.js** y **npm** instalados.
-- **Docker** y **Docker Compose** instalados.
-- Puerto `5672` (RabbitMQ) y `3000` (Puerto API Gateway) libres en tu equipo.
+- Instalación de **Node.js** y **npm**.
+- Instalación de **Docker** y **Docker Compose**.
+- Puerto `5672` (RabbitMQ) y `3000` (Puerto API Gateway) disponibles en el equipo.
 
 ### **Paso 1: Clonar el Repositorio**
 ```bash
@@ -64,22 +64,11 @@ git clone https://github.com/luiscano32/reto-directo.git
 cd reto-directo
 ```
 
-### **Paso 2: Instalar Dependencias**
-Instala las dependencias para cada aplicación dentro del monorepo:
-```bash
-npm install
-```
 
-### **Paso 3: Levantar RabbitMQ con Docker***
-Levanta RabbitMQ usando Docker:
-```bash
-docker-compose up -d
-```
-
-### **Paso 4: Configuración de variables de entorno***
-Genera una copia del archivo `.env.template` a un `.env` para configurar variables de entorno requeridas:
+### **Paso 2: Configuración de variables de entorno***
+Generar una copia del archivo `.env.template` y renombrarla como `.env` para la configuración de variables de entorno requeridas:
 ```javascript
-# Puerto en el que correrá el API Gateway.
+# Puerto de ejecución para el API Gateway.
 API_GATEWAY_PORT=<YOUR_PORT>
 
 # Dominio o dirección del servidor RabbitMQ. 
@@ -88,44 +77,25 @@ RABBITMQ_DEFAULT_DOMAIN=<YOUR_RABBITMQ_DOMAIN>
 RABBITMQ_DEFAULT_USER=<YOUR_RABBITMQ_USER>
 # Contraseña del usuario de RabbitMQ. 
 RABBITMQ_DEFAULT_PASS=<YOUR_RABBITMQ_PASSWORD>
-# Puerto donde se encuentra el servicio de RabbitMQ.
+# Puerto de RabbitMQ.
 RABBITMQ_DEFAULT_PORT=<YOUR_RABBITMQ_PORT>
 ```
 
-### **Paso 5: Ejecutar los Servicios**
-Ejecutar desde la raíz del proyecto en una terminal diferente para ejecutar cada microservicio:
+### **Paso 3: Implementación de Microservicios con Docker***
+Iniciar los microservicios y descarga de dependencias mediante Docker:
 ```bash
-# Ejecutar api-gateway
-nest start api-gateway
-
-# Ejecutar factorial-app
-nest start factorial-app
-
-# Ejecutar factors-service
-nest start factors-service
-
-# Ejecutar fibonacci-service
-nest start fibonacci-service
-
-# Ejecutar parity-service
-nest start parity-service
-
-# Ejecutar primality-service
-nest start primality-service
-
-# Ejecutar sum-service
-nest start sum-service
+docker-compose up -build
 ```
 
 ---
 
 ## 🧪 **Uso**
 ### Ejemplo de Petición al API Gateway
-Haz una solicitud GET al API Gateway para probar el servicio de paridad:
+Para probar el servicio de paridad, realiza una solicitud GET al API Gateway:
 ```bash
-GET http://localhost:3000/calculate?n=4
+GET http://localhost:<API_GATEWAY_PORT>/calculate?n=4
 ```
-Respuesta:
+Ejemplo de respuesta:
 ```bash
 {
   "isPair": true,
@@ -154,16 +124,14 @@ Respuesta:
 ## 🔧 **Solución de Problemas**
 #### Error de conexión con RabbitMQ:
 
-Verifica que Docker esté corriendo correctamente.
-Asegúrate de que los puertos `5672` y `15672` estén libres.
-Cola ya existente con configuración diferente:
-
-Elimina la cola en RabbitMQ desde el panel de administración en http://localhost:15672.
+- Verifica que Docker esté corriendo correctamente.
+- Asegura que los puertos `5672` y `15672` estén disponibles.
+- Para resolver conflictos de cola en RabbitMQ, accede al panel de administración en http://localhost:15672 y elimina la cola con configuración diferente.
 
 ---
 
 ## 📬 **Contacto**
-Estos son algunos de mis medios de contacto 👌:
+Puedes ponerte en contacto a través de los siguientes medios 👌:
 
 - **Email**: luis.e.cano@outlook.com
 - **LinkedIn**: https://www.linkedin.com/in/luis-cano-95oc21
